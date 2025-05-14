@@ -8,16 +8,13 @@ const webAppUrl = 'https://freedom-test.vercel.app';
 
 bot.onText(/\/start/, (msg) => {
   console.log("📩 /start от", msg.chat.username);
-  bot.sendMessage(msg.chat.id, "Нажми кнопку ниже, чтобы пройти тест:", {
-    reply_markup: {
-      keyboard: [[{
-        text: "🧪 Пройти тест",
-        web_app: { url: webAppUrl }
-      }]],
-      resize_keyboard: true,
-      one_time_keyboard: true
-    }
-  });
+bot.sendMessage(msg.chat.id, "Нажми кнопку ниже, чтобы пройти тест:", {
+  reply_markup: {
+    inline_keyboard: [[{
+      text: "🧪 Пройти тест",
+      web_app: { url: webAppUrl }
+    }]]
+  }
 });
 
 // 🧠 Эмуляция веб-сервера для Render
