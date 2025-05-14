@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 
 // Telegram bot
-const bot = new TelegramBot(process.env.7683975860:AAGLVLjvQA7U3K3vB8DX3w4UUEXef76gimY, { polling: true });
+const bot = new TelegramBot(process.env.BOT_TOKEN, { polling: true });
 const webAppUrl = 'https://freedom-test.vercel.app';
 
 bot.onText(/\/start/, (msg) => {
