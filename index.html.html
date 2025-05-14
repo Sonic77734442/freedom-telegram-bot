@@ -162,44 +162,69 @@
     </div>
   </div>
 
-  <script>
-    const tg = window.Telegram.WebApp;
-    tg.expand();
-    const answers = {};
+ <script>
+  const tg = window.Telegram.WebApp;
+  tg.expand();
+  const answers = {};
 
-    function selectOption(question, value, element) {
-      answers[question] = value;
-      document.querySelectorAll(`#${element.parentElement.id} .option-box`).forEach(el => el.classList.remove("selected"));
-      element.classList.add("selected");
+  function selectOption(question, value, element) {
+    answers[question] = value;
+    document.querySelectorAll(`#${element.parentElement.id} .option-box`).forEach(el => el.classList.remove("selected"));
+    element.classList.add("selected");
+  }
+
+  function nextStep() {
+    if (!answers.q1) return alert("Выберите вариант ответа");
+    document.getElementById("step1").classList.remove("active");
+    document.getElementById("step2").classList.add("active");
+    document.getElementById("progress-fill").style.width = '66%';
+  }
+
+  function submitAnswers() {
+    console.log("🔥 submitAnswers вызван");
+    alert("🔥 submitAnswers вызван");
+
+    if (!answers.q2) return alert("Выберите вариант ответа");
+    document.getElementById("step2").classList.remove("active");
+    document.getElementById("final").classList.add("active");
+    document.getElementById("progress-fill").style.width = '100%';
+
+    const user = tg.initDataUnsafe?.user;
+    console.log("👤 Пользователь:", user);
+    console.log("📦 Ответы:", answers);
+
+    if (user) {
+      fetch("/api/save", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          user_id: user.id,
+          username: user.username,
+          first_name: user.first_name,
+          answers
+        })
+      })
+      .then(res => {
+        console.log("✅ Ответ от /api/save:", res.status);
+        return res.text();
+      })
+      .then(data => {
+        console.log("📨 Ответ сервера:", data);
+        alert("✅ Ответ отправлен!");
+      })
+      .catch(err => {
+        console.error("❌ Ошибка отправки:", err);
+        alert("❌ Ошибка отправки: " + err.message);
+      });
+    } else {
+      alert("⚠️ Данные Telegram недоступны");
     }
+  }
 
-    function nextStep() {
-      if (!answers.q1) return alert("Выберите вариант ответа");
-      document.getElementById("step1").classList.remove("active");
-      document.getElementById("step2").classList.add("active");
-      document.getElementById("progress-fill").style.width = '66%';
-    }
-
-    function submitAnswers() {
-      if (!answers.q2) return alert("Выберите вариант ответа");
-      document.getElementById("step2").classList.remove("active");
-      document.getElementById("final").classList.add("active");
-      document.getElementById("progress-fill").style.width = '100%';
-
-      const user = tg.initDataUnsafe?.user;
-      if (user) {
-        fetch("/api/save", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            user_id: user.id,
-            username: user.username,
-            first_name: user.first_name,
-            answers
-          })
-        });
-      }
-    }
-  </script>
+  // 🔥 ГЛАВНОЕ: в самом низу!
+  window.submitAnswers = submitAnswers;
+  window.nextStep = nextStep;
+  window.selectOption = selectOption;
+</script>
 </body>
 </html>
