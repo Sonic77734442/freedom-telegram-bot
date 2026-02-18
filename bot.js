@@ -15,7 +15,7 @@ const bot = new TelegramBot(botToken, { polling: true });
 bot.onText(/\/start/, (msg) => {
   console.log("📩 /start от", msg.chat.username);
 
-  bot.sendMessage(msg.chat.id, "Нажми кнопку ниже, чтобы пройти опрос PGbonus:", {
+  bot.sendMessage(msg.chat.id, "Нажми кнопку ниже, чтобы зарегистрировать чек:", {
     reply_markup: {
       inline_keyboard: [[{
         text: "🧾 Зарегистрировать чек",

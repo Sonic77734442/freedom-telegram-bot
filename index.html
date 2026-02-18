@@ -1,131 +1,177 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <title>PGbonus</title>
+  <title>Procter & Gamble</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    body::before {
-      content: "";
-      position: fixed;
-      top: -100px;
-      left: -100px;
-      width: 200%;
-      height: 200%;
-      background:
-        radial-gradient(circle at 30% 30%, rgba(0,255,144,0.15) 0%, transparent 60%),
-        radial-gradient(circle at 70% 70%, rgba(0,127,79,0.15) 0%, transparent 60%);
-      background-size: 200% 200%;
-      animation: blobMove 15s ease-in-out infinite;
-      z-index: -1;
+    :root {
+      --pg-blue: #0046be;
+      --pg-deep-blue: #032b82;
+      --pg-light: #f4f8ff;
+      --pg-text: #0c1c45;
+      --pg-accent: #00a1ff;
+      --pg-border: rgba(255, 255, 255, 0.55);
     }
 
-    @keyframes blobMove {
-      0%, 100% { background-position: 0% 0%, 100% 100%; }
-      50% { background-position: 100% 0%, 0% 100%; }
-    }
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
+
     html, body {
       height: 100%;
       margin: 0;
-      font-family: 'Inter', sans-serif;
-      background: radial-gradient(circle at top left, #00ff90 0%, #0d1f1b 100%);
-      color: white;
+      font-family: 'Montserrat', sans-serif;
+      color: var(--pg-text);
       overflow: hidden;
+      background: radial-gradient(120% 140% at 0% 0%, #deebff 0%, #8cb8ff 45%, #2d6fdf 100%);
     }
-    .container {
-      max-width: 420px;
-      margin: auto;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 24px;
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 12% 18%, rgba(255, 255, 255, 0.55) 0%, transparent 35%),
+        radial-gradient(circle at 88% 75%, rgba(255, 255, 255, 0.35) 0%, transparent 36%);
+      z-index: -1;
     }
-    .step {
-      display: none;
-      flex-direction: column;
-      gap: 20px;
-      text-align: center;
-      animation: fadeIn 0.5s ease-in-out;
-    }
-    .step.active {
-      display: flex;
-    }
-    .step small {
-      font-size: 14px;
-      color: #ccc;
-    }
-    h2 {
-      font-size: 22px;
-      font-weight: 600;
-      margin: 0;
-    }
-    .option-box {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1.5px solid rgba(255, 255, 255, 0.1);
-      padding: 16px 20px;
-      border-radius: 16px;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      font-size: 16px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 4px 14px rgba(0,0,0,0.3);
-    }
-    .option-box:hover {
-      background: rgba(0, 255, 144, 0.08);
-      border-color: #00ff90;
-    }
-    .option-box.selected {
-      background: rgba(0, 255, 144, 0.2);
-      border-color: #00ff90;
-      transform: scale(1.02);
-    }
-    button {
-      background: #00ff90;
-      border: none;
-      padding: 14px;
-      font-weight: bold;
-      font-size: 15px;
-      color: #000;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: background 0.3s ease, transform 0.1s ease;
-      box-shadow: 0 4px 14px rgba(0, 255, 144, 0.3);
-    }
-    button:hover {
-      background: #00cc70;
-    }
-    button:active {
-      transform: scale(0.97);
-    }
-    .final {
-      background: rgba(255,255,255,0.08);
-      padding: 24px;
-      border-radius: 20px;
-      text-align: center;
-      backdrop-filter: blur(8px);
-    }
-    .final button {
-      width: 100%;
-    }
+
     .progress-bar {
       width: 100%;
       height: 6px;
-      background: rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.5);
     }
+
     #progress-fill {
       height: 100%;
-      width: 33%;
-      background: #00ff90;
+      width: 25%;
+      background: linear-gradient(90deg, var(--pg-deep-blue), var(--pg-accent));
       transition: width 0.3s ease;
     }
+
+    .container {
+      max-width: 430px;
+      height: 100%;
+      margin: 0 auto;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .panel {
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid var(--pg-border);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 22px 46px rgba(3, 31, 92, 0.23);
+      backdrop-filter: blur(10px);
+    }
+
+    .brand {
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      color: var(--pg-blue);
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    .step {
+      display: none;
+      flex-direction: column;
+      gap: 14px;
+      animation: fadeIn 0.35s ease;
+    }
+
+    .step.active { display: flex; }
+
+    .step small {
+      text-align: center;
+      color: #5069a3;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    h2 {
+      margin: 0;
+      text-align: center;
+      font-size: 20px;
+      line-height: 1.3;
+      color: #102451;
+    }
+
+    .option-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: #ffffff;
+      border: 1px solid #d5e4ff;
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 8px 18px rgba(0, 70, 190, 0.08);
+    }
+
+    .option-box:hover {
+      border-color: #8db4ff;
+      transform: translateY(-1px);
+    }
+
+    .option-box.selected {
+      border-color: var(--pg-blue);
+      background: #eef5ff;
+      box-shadow: 0 10px 20px rgba(0, 70, 190, 0.18);
+    }
+
+    .option-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #dfeaff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex: 0 0 30px;
+    }
+
+    button {
+      width: 100%;
+      border: none;
+      border-radius: 12px;
+      padding: 13px 16px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      color: #fff;
+      background: linear-gradient(135deg, var(--pg-blue), var(--pg-accent));
+      box-shadow: 0 12px 24px rgba(0, 70, 190, 0.28);
+      transition: transform 0.1s ease, filter 0.2s ease;
+    }
+
+    button:hover { filter: brightness(1.05); }
+    button:active { transform: scale(0.98); }
+
+    .final {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .final p {
+      margin: 0;
+      color: #334d80;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
+      from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
   </style>
@@ -133,77 +179,97 @@
 </head>
 <body>
   <div class="progress-bar"><div id="progress-fill"></div></div>
+
   <div class="container">
-    <div class="step active" id="step1">
-      <small>Шаг 1 из 2</small>
-      <h2> Какой бонус вас интересует? </h2>
-      <div class="option-box" onclick="selectOption('q1', 'Welcome bonus', this)">Welcome bonus</div>
-      <div class="option-box" onclick="selectOption('q1', 'Cashback', this)">Cashback</div>
-      <button onclick="nextStep()">Далее</button>
-    </div>
+    <div class="panel">
+      <div class="brand">Procter & Gamble</div>
 
-    <div class="step" id="step2">
-      <small>Шаг 2 из 2</small>
-      <h2> На какой платформе вы чаще играете? </h2>
-      <div class="option-box" onclick="selectOption('q2', 'Mobile', this)">Mobile</div>
-      <div class="option-box" onclick="selectOption('q2', 'Desktop', this)">Desktop</div>
-      <div class="option-box" onclick="selectOption('q2', 'Both', this)">Both</div>
-      <button onclick="submitAnswers()">Завершить</button>
-    </div>
+      <div class="step active" id="step1">
+        <small>Шаг 1 из 3</small>
+        <h2>У вас есть дети?</h2>
+        <div class="option-box" onclick="selectOption('q1', 'Да', this)">Да</div>
+        <div class="option-box" onclick="selectOption('q1', 'Нет', this)">Нет</div>
+        <button onclick="nextStep1()">Далее</button>
+      </div>
 
-    <div class="step" id="final">
-      <div class="final">
-        <h2>🎁 Спасибо за ответы!</h2>
-        <p style="margin-bottom: 20px;">Мы подготовим для вас подходящие бонусы и подборки с лучшими предложениями.</p>
-        <a href="https://pgbonus.club/?tab=best" target="_blank">
-          <button>Открыть PGbonus</button>
-        </a>
+      <div class="step" id="step2">
+        <small>Шаг 2 из 3</small>
+        <h2>Вы часто покупаете нашу продукцию?</h2>
+        <div class="option-box" onclick="selectOption('q2', 'Да', this)">Да</div>
+        <div class="option-box" onclick="selectOption('q2', 'Нет', this)">Нет</div>
+        <button onclick="nextStep2()">Далее</button>
+      </div>
+
+      <div class="step" id="step3">
+        <small>Шаг 3 из 3</small>
+        <h2>Выберите интересующее направление наших продуктов</h2>
+        <div class="option-box" onclick="selectOption('q3', 'Зубные пасты и порошки', this)">
+          <span class="option-icon">🦷</span>
+          <span>Зубные пасты и порошки</span>
+        </div>
+        <div class="option-box" onclick="selectOption('q3', 'Уходовая косметика для мужчин', this)">
+          <span class="option-icon">🧔</span>
+          <span>Уходовая косметика для мужчин</span>
+        </div>
+        <div class="option-box" onclick="selectOption('q3', 'Уходовая косметика для женщин', this)">
+          <span class="option-icon">👩</span>
+          <span>Уходовая косметика для женщин</span>
+        </div>
+        <button onclick="submitAnswers()">Завершить</button>
+      </div>
+
+      <div class="step" id="final">
+        <div class="final">
+          <h2>Спасибо за ответы!</h2>
+          <p>Мы учли ваши предпочтения. Нажмите кнопку ниже, чтобы перейти к регистрации чека.</p>
+          <a href="https://pgbonus.club/?tab=best" target="_blank" rel="noopener noreferrer">
+            <button>Зарегистрировать чек</button>
+          </a>
+        </div>
       </div>
     </div>
   </div>
 
-<script>
-  const tg = window.Telegram?.WebApp;
-  if (tg) {
-    tg.ready();
-    tg.expand();
-  } else {
-    console.warn("Telegram WebApp API is not available outside Telegram client.");
-  }
+  <script>
+    const tg = window.Telegram?.WebApp;
+    if (tg) {
+      tg.ready();
+      tg.expand();
+    } else {
+      console.warn("Telegram WebApp API is not available outside Telegram client.");
+    }
 
-  const answers = {};
+    const answers = {};
 
-  console.log("🔥 Telegram WebApp загружен");
-  console.log("🌐 initData:", tg?.initData);
-  console.log("👤 initDataUnsafe:", tg?.initDataUnsafe);
+    function selectOption(question, value, element) {
+      answers[question] = value;
+      document.querySelectorAll(`#${element.parentElement.id} .option-box`).forEach((el) => el.classList.remove("selected"));
+      element.classList.add("selected");
+    }
 
-  function selectOption(question, value, element) {
-    answers[question] = value;
-    document.querySelectorAll(`#${element.parentElement.id} .option-box`).forEach(el => el.classList.remove("selected"));
-    element.classList.add("selected");
-  }
+    function nextStep1() {
+      if (!answers.q1) return alert("Выберите вариант ответа");
+      document.getElementById("step1").classList.remove("active");
+      document.getElementById("step2").classList.add("active");
+      document.getElementById("progress-fill").style.width = "50%";
+    }
 
-  function nextStep() {
-    if (!answers.q1) return alert("Выберите вариант ответа");
-    document.getElementById("step1").classList.remove("active");
-    document.getElementById("step2").classList.add("active");
-    document.getElementById("progress-fill").style.width = '66%';
-  }
+    function nextStep2() {
+      if (!answers.q2) return alert("Выберите вариант ответа");
+      document.getElementById("step2").classList.remove("active");
+      document.getElementById("step3").classList.add("active");
+      document.getElementById("progress-fill").style.width = "75%";
+    }
 
-  function submitAnswers() {
-    console.log("🔥 submitAnswers вызван");
-    //alert("🔥 submitAnswers вызван");
+    function submitAnswers() {
+      if (!answers.q3) return alert("Выберите вариант ответа");
 
-    if (!answers.q2) return alert("Выберите вариант ответа");
-    document.getElementById("step2").classList.remove("active");
-    document.getElementById("final").classList.add("active");
-    document.getElementById("progress-fill").style.width = '100%';
+      document.getElementById("step3").classList.remove("active");
+      document.getElementById("final").classList.add("active");
+      document.getElementById("progress-fill").style.width = "100%";
 
-    const user = tg?.initDataUnsafe?.user;
-
-    if (user) {
-      console.log("👤 Пользователь:", user);
-      console.log("📦 Ответы:", answers);
+      const user = tg?.initDataUnsafe?.user;
+      if (!user) return;
 
       fetch("/api/save", {
         method: "POST",
@@ -213,30 +279,17 @@
           username: user.username,
           first_name: user.first_name,
           init_data: tg?.initData || "",
-          answers
-        })
-      })
-      .then(res => {
-        console.log("✅ Ответ от /api/save:", res.status);
-        return res.text();
-      })
-      .then(data => {
-        console.log("📨 Ответ сервера:", data);
-        //alert("✅ Ответ отправлен!");
-      })
-      .catch(err => {
-        console.error("❌ Ошибка отправки:", err);
-       // alert("❌ Ошибка отправки: " + err.message);
+          answers,
+        }),
+      }).catch((err) => {
+        console.error("Ошибка отправки:", err);
       });
-    } else {
-      //alert("⚠️ Данные Telegram недоступны. Убедитесь, что вы открыли тест через Telegram-кнопку.");
     }
-  }
 
-  // 💾 Пробрасываем функции в window
-  window.submitAnswers = submitAnswers;
-  window.nextStep = nextStep;
-  window.selectOption = selectOption;
-</script>
+    window.selectOption = selectOption;
+    window.nextStep1 = nextStep1;
+    window.nextStep2 = nextStep2;
+    window.submitAnswers = submitAnswers;
+  </script>
 </body>
 </html>
