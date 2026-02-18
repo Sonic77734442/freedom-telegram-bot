@@ -3,7 +3,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <title>Ipoteka Bank</title>
+  <title>PGbonus</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
@@ -136,42 +136,46 @@
   <div class="container">
     <div class="step active" id="step1">
       <small>Шаг 1 из 2</small>
-      <h2> У вас есть кредиты? </h2>
-      <div class="option-box" onclick="selectOption('q1', 'Да', this)">Да</div>
-      <div class="option-box" onclick="selectOption('q1', 'Нет', this)">Нет</div>
+      <h2> Какой бонус вас интересует? </h2>
+      <div class="option-box" onclick="selectOption('q1', 'Welcome bonus', this)">Welcome bonus</div>
+      <div class="option-box" onclick="selectOption('q1', 'Cashback', this)">Cashback</div>
       <button onclick="nextStep()">Далее</button>
     </div>
 
     <div class="step" id="step2">
       <small>Шаг 2 из 2</small>
-      <h2> Под какой процент вам выгоден кредит? </h2>
-      <div class="option-box" onclick="selectOption('q2', '10–15%', this)">05–10%</div>
-      <div class="option-box" onclick="selectOption('q2', '20–30%', this)">10–15%</div>
-      <div class="option-box" onclick="selectOption('q2', 'Более 30%', this)">0%</div>
+      <h2> На какой платформе вы чаще играете? </h2>
+      <div class="option-box" onclick="selectOption('q2', 'Mobile', this)">Mobile</div>
+      <div class="option-box" onclick="selectOption('q2', 'Desktop', this)">Desktop</div>
+      <div class="option-box" onclick="selectOption('q2', 'Both', this)">Both</div>
       <button onclick="submitAnswers()">Завершить</button>
     </div>
 
     <div class="step" id="final">
       <div class="final">
         <h2>🎁 Спасибо за ответы!</h2>
-        <p style="margin-bottom: 20px;">Вы можете получить <strong>бесплатную консультацию</strong> или <strong>зарегистрироваться на бирже без комиссии</strong>.</p>
-        <a href="https://www.ipotekabank.uz/uz/" target="_blank">
-          <button>Получить подарок</button>
+        <p style="margin-bottom: 20px;">Мы подготовим для вас подходящие бонусы и подборки с лучшими предложениями.</p>
+        <a href="https://pgbonus.club/?tab=best" target="_blank">
+          <button>Открыть PGbonus</button>
         </a>
       </div>
     </div>
   </div>
 
 <script>
-  const tg = window.Telegram.WebApp;
-  tg.ready(); // гарантирует готовность API
-  tg.expand();
+  const tg = window.Telegram?.WebApp;
+  if (tg) {
+    tg.ready();
+    tg.expand();
+  } else {
+    console.warn("Telegram WebApp API is not available outside Telegram client.");
+  }
 
   const answers = {};
 
   console.log("🔥 Telegram WebApp загружен");
-  console.log("🌐 initData:", tg.initData);
-  console.log("👤 initDataUnsafe:", tg.initDataUnsafe);
+  console.log("🌐 initData:", tg?.initData);
+  console.log("👤 initDataUnsafe:", tg?.initDataUnsafe);
 
   function selectOption(question, value, element) {
     answers[question] = value;
@@ -195,7 +199,7 @@
     document.getElementById("final").classList.add("active");
     document.getElementById("progress-fill").style.width = '100%';
 
-    const user = tg.initDataUnsafe?.user;
+    const user = tg?.initDataUnsafe?.user;
 
     if (user) {
       console.log("👤 Пользователь:", user);
@@ -208,6 +212,7 @@
           user_id: user.id,
           username: user.username,
           first_name: user.first_name,
+          init_data: tg?.initData || "",
           answers
         })
       })
