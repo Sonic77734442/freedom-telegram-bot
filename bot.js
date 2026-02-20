@@ -6,7 +6,6 @@ const botToken = process.env.BOT_TOKEN;
 const webAppUrl = process.env.WEB_APP_URL || 'https://freedom-test.vercel.app';
 const webhookBaseUrl = process.env.WEBHOOK_URL;
 const webhookSecret = process.env.WEBHOOK_SECRET || '';
-const usePolling = process.env.USE_POLLING === 'true';
 const webhookPath = '/telegram/webhook';
 const webhookUrl = webhookBaseUrl ? `${webhookBaseUrl}${webhookPath}` : null;
 
@@ -15,7 +14,7 @@ if (!botToken) {
   process.exit(1);
 }
 
-const bot = new TelegramBot(botToken, { polling: usePolling });
+const bot = new TelegramBot(botToken, { polling: false });
 
 bot.onText(/\/start/, (msg) => {
   console.log("📩 /start от", msg.chat.username);
@@ -51,13 +50,8 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, async () => {
   console.log(`🌐 WebService для Render запущен на порту ${PORT}`);
 
-  if (usePolling) {
-    console.log('🤖 Bot is running in polling mode');
-    return;
-  }
-
   if (!webhookUrl) {
-    console.error('WEBHOOK_URL is required when USE_POLLING is not true.');
+    console.error('WEBHOOK_URL is required.');
     process.exit(1);
   }
 
